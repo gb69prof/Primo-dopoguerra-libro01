@@ -1,13 +1,12 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Il mondo dopo la Prima guerra mondiale</title>
 <style>
 :root{
-  --paper:#fbf6ea;--ink:#1f1f1f;--muted:#6a6258;--accent:#7a2e2e;
-  --shadow:0 18px 45px rgba(0,0,0,.18);
+  --paper:#fbf6ea;--ink:#1f1f1f;--accent:#7a2e2e;--shadow:0 18px 45px rgba(0,0,0,.18);
   --radius:16px;--serif:Palatino,Georgia,serif;--sans:system-ui,Arial,sans-serif;
 }
 *{box-sizing:border-box}
@@ -17,11 +16,12 @@ body{margin:0;background:#f1efe8;color:var(--ink);font-family:var(--sans)}
 .header{padding:22px 26px 12px;border-bottom:1px solid rgba(140,120,90,.22)}
 .title{margin:0;font-family:var(--serif);font-size:28px}
 .page{padding:26px}
+.page h2{font-family:var(--serif)}
 .page p{font-family:var(--serif);font-size:17px;line-height:1.72;text-align:justify;margin:0 0 14px}
 .note-ref{border-bottom:2px solid rgba(122,46,46,.35);cursor:pointer}
 .badge{font-size:11px;border:1px solid rgba(122,46,46,.3);border-radius:999px;padding:2px 6px;margin-left:4px}
-/* finestre */
-.win{position:fixed;left:80px;top:120px;width:420px;max-width:90vw;height:260px;background:#fffaf0;border:1px solid rgba(140,120,90,.35);border-radius:16px;box-shadow:var(--shadow);z-index:1000;overflow:hidden}
+/* finestre mobili */
+.win{position:fixed;left:80px;top:120px;width:420px;max-width:92vw;height:280px;background:#fffaf0;border:1px solid rgba(140,120,90,.35);border-radius:16px;box-shadow:var(--shadow);z-index:1000;overflow:hidden}
 .win-header{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:rgba(122,46,46,.1);cursor:move}
 .win-title{font-size:13px;text-transform:uppercase}
 .win-actions button{border:1px solid rgba(140,120,90,.35);background:#fff;border-radius:10px;padding:4px 8px;cursor:pointer}
@@ -34,23 +34,44 @@ body{margin:0;background:#f1efe8;color:var(--ink);font-family:var(--sans)}
 <div class="book">
 <div class="header"><h1 class="title">Il mondo dopo la Prima guerra mondiale</h1></div>
 <div class="page">
+
+<h2>Il mondo dopo la Prima guerra mondiale</h2>
 <p>La Prima guerra mondiale segnò una frattura profonda nella storia contemporanea. Non si trattò soltanto della fine di un conflitto armato, ma del crollo di un equilibrio politico, economico e sociale che aveva retto l’Europa e gran parte del mondo fino al 1914. Il dopoguerra si aprì come un tempo instabile, attraversato da crisi, speranze e paure, destinato a incidere in modo decisivo sulle vicende dei singoli Stati.</p>
-<p>La fine degli imperi centrali e il ridisegno dei confini non portarono a una pace duratura. Le nuove democrazie nate dopo il conflitto si rivelarono spesso fragili. In Russia, la <span class="note-ref" data-pop="rivoluzione">rivoluzione bolscevica<span class="badge">1</span></span> aprì la strada a un esperimento politico radicale.</p>
-<p>Anche gli Stati Uniti scelsero inizialmente la via dell’<span class="note-ref" data-pop="isolazionismo">isolazionismo<span class="badge">2</span></span>, rinunciando a un ruolo diretto nella politica europea.</p>
-<p>La guerra aveva sconvolto i sistemi produttivi. Gli squilibri esplosero con la <span class="note-ref" data-pop="crisi1929">crisi del 1929<span class="badge">3</span></span>, che mise in discussione il capitalismo liberale.</p>
-<p>Negli Stati Uniti la risposta fu il <span class="note-ref" data-pop="newdeal">New Deal<span class="badge">4</span></span>, una svolta nel rapporto tra Stato ed economia.</p>
-<p>Il primo dopoguerra vide l’affermarsi della <span class="note-ref" data-pop="societamassa">società di massa<span class="badge">5</span></span>, con nuove paure e nuove forme di partecipazione.</p>
-<p>In questo contesto maturarono le condizioni che portarono ai <span class="note-ref" data-pop="totalitarismi">totalitarismi<span class="badge">6</span></span>.</p>
+
+<h2>Un nuovo equilibrio politico instabile</h2>
+<p>La fine degli <span class="note-ref" data-pop="impericentrali">imperi centrali<span class="badge">1</span></span> (impero tedesco e impero austro-ungarico) e il ridisegno dei confini non portarono a una pace duratura. Le nuove democrazie nate dopo il conflitto si rivelarono spesso fragili, incapaci di rispondere alle aspettative di popolazioni provate dalla guerra. In Russia, la <span class="note-ref" data-pop="rivoluzione">rivoluzione bolscevica<span class="badge">2</span></span> aveva aperto la strada a un esperimento politico radicale, fondato sulla dittatura del partito unico e sulla trasformazione forzata della società. Negli altri paesi europei, il timore che la rivoluzione potesse estendersi alimentò una diffusa instabilità politica e il ricorso a soluzioni autoritarie.</p>
+<p>Anche gli Stati Uniti, pur usciti rafforzati dalla guerra, scelsero inizialmente la via dell’<span class="note-ref" data-pop="isolazionismo">isolazionismo<span class="badge">3</span></span>, rinunciando a un ruolo diretto nella costruzione di un nuovo ordine internazionale. Questo lasciò l’Europa priva di un reale equilibrio politico e diplomatico.</p>
+
+<h2>Le difficoltà economiche del dopoguerra</h2>
+<p>La guerra aveva sconvolto i sistemi produttivi. La riconversione dall’<span class="note-ref" data-pop="economiaguerra">economia di guerra<span class="badge">4</span></span> a quella di pace risultò problematica: la disoccupazione aumentò, i debiti pubblici pesarono sulle finanze statali e la dipendenza economica europea dagli Stati Uniti si fece sempre più evidente. Gli squilibri accumulati esplosero con la crisi del <span class="note-ref" data-pop="crisi1929">1929<span class="badge">5</span></span>, che mostrò i limiti del capitalismo liberale e mise in discussione l’idea che il mercato fosse in grado di autoregolarsi.</p>
+<p>Negli Stati Uniti la risposta fu il <span class="note-ref" data-pop="newdeal">New Deal<span class="badge">6</span></span>, una politica di intervento statale nell’economia che segnò una svolta storica.</p>
+
+<h2>Una società in trasformazione</h2>
+<p>Il dopoguerra fu anche un periodo di profondi mutamenti sociali. La partecipazione di massa alla guerra aveva accresciuto la coscienza politica delle popolazioni. Operai, contadini, reduci e donne rivendicarono nuovi diritti e un maggiore riconoscimento sociale. Allo stesso tempo, il trauma del conflitto, la disoccupazione e la paura del futuro generarono insicurezza e sfiducia nelle istituzioni democratiche.</p>
+<p>In questo clima, molti individui cercarono risposte semplici a problemi complessi, aprendo la strada a ideologie che promettevano ordine, stabilità e riscatto nazionale.</p>
+
+<h2>Un contesto decisivo per l’Italia e la Germania</h2>
+<p>Il quadro mondiale del primo dopoguerra costituisce lo sfondo indispensabile per comprendere le vicende di Italia e Germania. Entrambi i paesi uscirono dal conflitto segnati da crisi economiche, tensioni sociali e instabilità politica. In questo contesto maturarono i presupposti che portarono all’affermazione dei regimi fascista e nazista, presentati come risposte radicali a una crisi percepita come totale.</p>
+<p>Comprendere il dopoguerra a livello mondiale significa, dunque, capire le condizioni che resero possibile l’ascesa dei <span class="note-ref" data-pop="totalitarismi">totalitarismi<span class="badge">7</span></span> in Europa e, in particolare, in Italia e in Germania.</p>
+
 </div>
 </div>
 </div>
 
-<template id="tpl-rivoluzione"><p><b>Rivoluzione bolscevica (1917)</b><br>La rivoluzione russa non fu solo un evento nazionale, ma un trauma geopolitico per l’Europa. La nascita dell’URSS fece paura alle élite e favorì soluzioni autoritarie.</p></template>
-<template id="tpl-isolazionismo"><p><b>Isolazionismo USA</b><br>Gli Stati Uniti evitarono impegni politici stabili in Europa. L’assenza di un arbitro forte rese il continente più fragile.</p></template>
-<template id="tpl-crisi1929"><p><b>Crisi del 1929</b><br>Il crollo di Wall Street colpì produzione e occupazione, delegittimando le democrazie liberali.</p></template>
-<template id="tpl-newdeal"><p><b>New Deal</b><br>Politica di intervento statale: lavori pubblici, welfare e regolazione finanziaria.</p></template>
-<template id="tpl-societamassa"><p><b>Società di massa</b><br>Ingresso delle masse nella politica e nei media. Più democrazia, ma anche più paura e manipolazione.</p></template>
-<template id="tpl-totalitarismi"><p><b>Totalitarismi</b><br>Sistemi politici che controllano ogni aspetto della vita collettiva tramite partito unico, propaganda e repressione.</p></template>
+<!-- TEMPLATES APPROFONDIMENTI -->
+<template id="tpl-impericentrali"><p><b>Imperi centrali</b><br>Con l’espressione Imperi centrali si indicano gli Stati che combatterono contro l’Intesa durante la Prima guerra mondiale. La loro sconfitta portò allo smembramento degli imperi e a un ridisegno instabile dei confini europei.</p></template>
+
+<template id="tpl-rivoluzione"><p><b>Rivoluzione bolscevica</b><br>Processo rivoluzionario che nel 1917 portò i bolscevichi al potere in Russia. Fondato sul partito unico e sulla trasformazione forzata della società, ebbe un enorme impatto internazionale.</p></template>
+
+<template id="tpl-isolazionismo"><p><b>Isolazionismo</b><br>Scelta degli Stati Uniti di limitare il coinvolgimento politico e militare internazionale dopo la Prima guerra mondiale, indebolendo l’equilibrio europeo.</p></template>
+
+<template id="tpl-economiaguerra"><p><b>Economia di guerra</b><br>Sistema economico in cui lo Stato orienta produzione e risorse verso le esigenze belliche. Il ritorno all’economia di pace fu difficile e generò crisi e disoccupazione.</p></template>
+
+<template id="tpl-crisi1929"><p><b>Crisi del 1929</b><br>Il crollo di Wall Street colpì produzione e occupazione a livello globale, delegittimando le democrazie liberali e favorendo movimenti radicali.</p></template>
+
+<template id="tpl-newdeal"><p><b>New Deal</b><br>Politica economica avviata da Roosevelt dal 1933: intervento statale, lavori pubblici, welfare e regolazione finanziaria.</p></template>
+
+<template id="tpl-totalitarismi"><p><b>Totalitarismi</b><br>Sistemi politici in cui lo Stato controlla ogni aspetto della vita collettiva attraverso partito unico, propaganda e repressione.</p></template>
 
 <script>
 let z=1000;
