@@ -1,96 +1,454 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Il mondo dopo la Prima guerra mondiale</title>
-<style>
-:root{
-  --paper:#fbf6ea;--ink:#1f1f1f;--accent:#7a2e2e;--shadow:0 18px 45px rgba(0,0,0,.18);
-  --radius:16px;--serif:Palatino,Georgia,serif;--sans:system-ui,Arial,sans-serif;
-}
-*{box-sizing:border-box}
-body{margin:0;background:#f1efe8;color:var(--ink);font-family:var(--sans)}
-.wrap{max-width:900px;margin:28px auto;padding:0 14px}
-.book{background:var(--paper);border:1px solid rgba(140,120,90,.25);border-radius:24px;box-shadow:var(--shadow)}
-.header{padding:22px 26px 12px;border-bottom:1px solid rgba(140,120,90,.22)}
-.title{margin:0;font-family:var(--serif);font-size:28px}
-.page{padding:26px}
-.page h2{font-family:var(--serif)}
-.page p{font-family:var(--serif);font-size:17px;line-height:1.72;text-align:justify;margin:0 0 14px}
-.note-ref{border-bottom:2px solid rgba(122,46,46,.35);cursor:pointer}
-.badge{font-size:11px;border:1px solid rgba(122,46,46,.3);border-radius:999px;padding:2px 6px;margin-left:4px}
-/* finestre mobili */
-.win{position:fixed;left:80px;top:120px;width:420px;max-width:92vw;height:280px;background:#fffaf0;border:1px solid rgba(140,120,90,.35);border-radius:16px;box-shadow:var(--shadow);z-index:1000;overflow:hidden}
-.win-header{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:rgba(122,46,46,.1);cursor:move}
-.win-title{font-size:13px;text-transform:uppercase}
-.win-actions button{border:1px solid rgba(140,120,90,.35);background:#fff;border-radius:10px;padding:4px 8px;cursor:pointer}
-.win-body{padding:12px 14px;font-family:var(--serif);font-size:14.5px;line-height:1.55;overflow:auto;height:calc(100% - 42px)}
-.resize{position:absolute;right:6px;bottom:6px;width:16px;height:16px;background:rgba(140,120,90,.4);cursor:nwse-resize}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Il mondo dopo la Prima guerra mondiale</title>
+  <style>
+    :root{
+      --paper:#fbf6ea;
+      --ink:#1f1f1f;
+      --muted:#6a6258;
+      --accent:#7a2e2e;
+      --line: rgba(140,120,90,.25);
+      --shadow: 0 18px 45px rgba(0,0,0,.18);
+      --radius: 18px;
+      --serif: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      background:
+        radial-gradient(1200px 700px at 20% 0%, rgba(122,46,46,.08), transparent 60%),
+        radial-gradient(1100px 650px at 90% 20%, rgba(70,90,120,.07), transparent 55%),
+        #f1efe8;
+      color:var(--ink);
+      font-family:var(--sans);
+    }
+
+    .wrap{ max-width: 980px; margin: 28px auto; padding: 0 14px 40px; }
+
+    .book{
+      position:relative;
+      background: linear-gradient(180deg, rgba(255,255,255,.35), transparent 38%), var(--paper);
+      border:1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .header{
+      padding: 22px 26px 14px;
+      border-bottom:1px solid rgba(140,120,90,.22);
+      background:
+        linear-gradient(90deg, rgba(122,46,46,.08), transparent 45%),
+        linear-gradient(180deg, rgba(255,255,255,.35), transparent 60%);
+    }
+
+    h1{
+      margin:0;
+      font-family:var(--serif);
+      font-size: clamp(22px, 2.4vw, 32px);
+      letter-spacing: .2px;
+    }
+
+    .page{
+      padding: 26px 28px 28px;
+      position:relative;
+    }
+
+    .page:before{
+      content:"";
+      position:absolute;
+      inset: 14px 16px;
+      border: 1px dashed rgba(140,120,90,.24);
+      border-radius: 18px;
+      pointer-events:none;
+    }
+
+    .page h2{
+      font-family:var(--serif);
+      font-size: 20px;
+      margin: 18px 0 10px;
+      letter-spacing:.15px;
+    }
+
+    .page p{
+      font-family:var(--serif);
+      font-size: 17px;
+      line-height: 1.72;
+      margin: 0 0 12px;
+      text-align: justify;
+      hyphens:auto;
+    }
+
+    .note-ref{
+      display:inline-flex;
+      align-items:baseline;
+      gap:6px;
+      padding: 0 2px;
+      border-bottom: 2px solid rgba(122,46,46,.28);
+      border-radius: 6px;
+      cursor:pointer;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+      transition: background .15s ease, border-color .15s ease;
+    }
+    .note-ref:hover{ background: rgba(122,46,46,.08); border-bottom-color: rgba(122,46,46,.42); }
+
+    .badge{
+      font-family:var(--sans);
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(122,46,46,.32);
+      background: rgba(255,255,255,.6);
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    /* ====== Finestre mobili ====== */
+    .win{
+      position: fixed;
+      left: 90px;
+      top: 120px;
+      width: 440px;
+      height: 300px;
+      max-width: 92vw;
+      max-height: 80vh;
+      min-width: 280px;
+      min-height: 180px;
+      background: #fffaf0;
+      border: 1px solid rgba(140,120,90,.35);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      z-index: 1000;
+      touch-action: none; /* fondamentale: drag/resize su touch */
+    }
+
+    .win-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap: 10px;
+      padding: 10px 12px;
+      background: rgba(122,46,46,.10);
+      border-bottom: 1px solid rgba(140,120,90,.18);
+      cursor: grab;
+      user-select:none;
+    }
+    .win-header:active{ cursor: grabbing; }
+
+    .win-title{
+      font-family: var(--sans);
+      font-size: 12px;
+      letter-spacing:.35px;
+      text-transform: uppercase;
+      color: rgba(31,31,31,.82);
+      overflow:hidden;
+      white-space:nowrap;
+      text-overflow:ellipsis;
+    }
+
+    .win-actions{
+      display:flex;
+      gap: 8px;
+      flex: 0 0 auto;
+    }
+
+    .win-btn{
+      border: 1px solid rgba(140,120,90,.35);
+      background: rgba(255,255,255,.85);
+      border-radius: 10px;
+      padding: 4px 9px;
+      cursor:pointer;
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    .win-body{
+      padding: 12px 14px 14px;
+      font-family: var(--serif);
+      font-size: 14.8px;
+      line-height: 1.55;
+      overflow: auto;
+      height: calc(100% - 45px);
+      color: rgba(31,31,31,.92);
+    }
+
+    .win-body h3{
+      margin: 0 0 8px;
+      font-family: var(--sans);
+      font-size: 13px;
+      letter-spacing:.3px;
+      text-transform: uppercase;
+      color: rgba(31,31,31,.86);
+    }
+
+    .win-body p{ margin: 0; }
+
+    .resize{
+      position:absolute;
+      right: 8px;
+      bottom: 8px;
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+      background: rgba(140,120,90,.45);
+      cursor: nwse-resize;
+      touch-action: none;
+    }
+
+    .hint{
+      padding: 0 28px 22px;
+      color: var(--muted);
+      font-size: 13px;
+      border-top: 1px solid rgba(140,120,90,.18);
+      background: rgba(255,255,255,.12);
+    }
+
+    .hint b{ color: rgba(31,31,31,.85); }
+  </style>
 </head>
 <body>
-<div class="wrap">
-<div class="book">
-<div class="header"><h1 class="title">Il mondo dopo la Prima guerra mondiale</h1></div>
-<div class="page">
+  <div class="wrap">
+    <article class="book">
+      <header class="header">
+        <h1>Il mondo dopo la Prima guerra mondiale</h1>
+      </header>
 
-<h2>Il mondo dopo la Prima guerra mondiale</h2>
-<p>La Prima guerra mondiale segnò una frattura profonda nella storia contemporanea. Non si trattò soltanto della fine di un conflitto armato, ma del crollo di un equilibrio politico, economico e sociale che aveva retto l’Europa e gran parte del mondo fino al 1914. Il dopoguerra si aprì come un tempo instabile, attraversato da crisi, speranze e paure, destinato a incidere in modo decisivo sulle vicende dei singoli Stati.</p>
+      <section class="page" id="page">
+        <p>La Prima guerra mondiale segnò una frattura profonda nella storia contemporanea. Non si trattò soltanto della fine di un conflitto armato, ma del crollo di un equilibrio politico, economico e sociale che aveva retto l’Europa e gran parte del mondo fino al 1914. Il dopoguerra si aprì come un tempo instabile, attraversato da crisi, speranze e paure, destinato a incidere in modo decisivo sulle vicende dei singoli Stati.</p>
 
-<h2>Un nuovo equilibrio politico instabile</h2>
-<p>La fine degli <span class="note-ref" data-pop="impericentrali">imperi centrali<span class="badge">1</span></span> (impero tedesco e impero austro-ungarico) e il ridisegno dei confini non portarono a una pace duratura. Le nuove democrazie nate dopo il conflitto si rivelarono spesso fragili, incapaci di rispondere alle aspettative di popolazioni provate dalla guerra. In Russia, la <span class="note-ref" data-pop="rivoluzione">rivoluzione bolscevica<span class="badge">2</span></span> aveva aperto la strada a un esperimento politico radicale, fondato sulla dittatura del partito unico e sulla trasformazione forzata della società. Negli altri paesi europei, il timore che la rivoluzione potesse estendersi alimentò una diffusa instabilità politica e il ricorso a soluzioni autoritarie.</p>
-<p>Anche gli Stati Uniti, pur usciti rafforzati dalla guerra, scelsero inizialmente la via dell’<span class="note-ref" data-pop="isolazionismo">isolazionismo<span class="badge">3</span></span>, rinunciando a un ruolo diretto nella costruzione di un nuovo ordine internazionale. Questo lasciò l’Europa priva di un reale equilibrio politico e diplomatico.</p>
+        <h2>Un nuovo equilibrio politico instabile</h2>
+        <p>La fine degli imperi centrali (impero tedesco e impero austro-ungarico) e il ridisegno dei confini non portarono a una pace duratura. Le nuove democrazie nate dopo il conflitto si rivelarono spesso fragili, incapaci di rispondere alle aspettative di popolazioni provate dalla guerra. In Russia, la <span class="note-ref" data-pop="rivoluzione">rivoluzione bolscevica<span class="badge">1</span></span> aveva aperto la strada a un esperimento politico radicale, fondato sulla dittatura del partito unico e sulla trasformazione forzata della società. Negli altri paesi europei, il timore che la rivoluzione potesse estendersi alimentò una diffusa instabilità politica e il ricorso a soluzioni autoritarie.</p>
+        <p>Anche gli Stati Uniti, pur usciti rafforzati dalla guerra, scelsero inizialmente la via dell’<span class="note-ref" data-pop="isolazionismo">isolazionismo<span class="badge">2</span></span>, rinunciando a un ruolo diretto nella costruzione di un nuovo ordine internazionale. Questo lasciò l’Europa priva di un reale equilibrio politico e diplomatico.</p>
 
-<h2>Le difficoltà economiche del dopoguerra</h2>
-<p>La guerra aveva sconvolto i sistemi produttivi. La riconversione dall’<span class="note-ref" data-pop="economiaguerra">economia di guerra<span class="badge">4</span></span> a quella di pace risultò problematica: la disoccupazione aumentò, i debiti pubblici pesarono sulle finanze statali e la dipendenza economica europea dagli Stati Uniti si fece sempre più evidente. Gli squilibri accumulati esplosero con la crisi del <span class="note-ref" data-pop="crisi1929">1929<span class="badge">5</span></span>, che mostrò i limiti del capitalismo liberale e mise in discussione l’idea che il mercato fosse in grado di autoregolarsi.</p>
-<p>Negli Stati Uniti la risposta fu il <span class="note-ref" data-pop="newdeal">New Deal<span class="badge">6</span></span>, una politica di intervento statale nell’economia che segnò una svolta storica.</p>
+        <h2>Le difficoltà economiche del dopoguerra</h2>
+        <p>La guerra aveva sconvolto i sistemi produttivi. La riconversione dall’economia di guerra a quella di pace risultò problematica: la disoccupazione aumentò, i debiti pubblici pesarono sulle finanze statali e la dipendenza economica europea dagli Stati Uniti si fece sempre più evidente. Gli squilibri accumulati esplosero con la <span class="note-ref" data-pop="crisi1929">crisi del 1929<span class="badge">3</span></span>, che mostrò i limiti del capitalismo liberale e mise in discussione l’idea che il mercato fosse in grado di autoregolarsi.</p>
+        <p>Negli Stati Uniti la risposta fu il <span class="note-ref" data-pop="newdeal">New Deal<span class="badge">4</span></span>, una politica di intervento statale nell’economia che segnò una svolta storica. In Europa, invece, la crisi colpì duramente soprattutto i paesi già più fragili, alimentando tensioni sociali e radicalizzazioni politiche.</p>
 
-<h2>Una società in trasformazione</h2>
-<p>Il dopoguerra fu anche un periodo di profondi mutamenti sociali. La partecipazione di massa alla guerra aveva accresciuto la coscienza politica delle popolazioni. Operai, contadini, reduci e donne rivendicarono nuovi diritti e un maggiore riconoscimento sociale. Allo stesso tempo, il trauma del conflitto, la disoccupazione e la paura del futuro generarono insicurezza e sfiducia nelle istituzioni democratiche.</p>
-<p>In questo clima, molti individui cercarono risposte semplici a problemi complessi, aprendo la strada a ideologie che promettevano ordine, stabilità e riscatto nazionale.</p>
+        <h2>Una società in trasformazione</h2>
+        <p>Il dopoguerra fu anche un periodo di profondi mutamenti sociali. La partecipazione di massa alla guerra aveva accresciuto la coscienza politica delle popolazioni. Operai, contadini, reduci e donne rivendicarono nuovi diritti e un maggiore riconoscimento sociale. Allo stesso tempo, il trauma del conflitto, la disoccupazione e la paura del futuro generarono insicurezza e sfiducia nelle istituzioni democratiche.</p>
+        <p>In questo clima, molti individui cercarono risposte semplici a problemi complessi, aprendo la strada a ideologie che promettevano ordine, stabilità e riscatto nazionale.</p>
 
-<h2>Un contesto decisivo per l’Italia e la Germania</h2>
-<p>Il quadro mondiale del primo dopoguerra costituisce lo sfondo indispensabile per comprendere le vicende di Italia e Germania. Entrambi i paesi uscirono dal conflitto segnati da crisi economiche, tensioni sociali e instabilità politica. In questo contesto maturarono i presupposti che portarono all’affermazione dei regimi fascista e nazista, presentati come risposte radicali a una crisi percepita come totale.</p>
-<p>Comprendere il dopoguerra a livello mondiale significa, dunque, capire le condizioni che resero possibile l’ascesa dei <span class="note-ref" data-pop="totalitarismi">totalitarismi<span class="badge">7</span></span> in Europa e, in particolare, in Italia e in Germania.</p>
+        <h2>Un contesto decisivo per l’Italia e la Germania</h2>
+        <p>Il quadro mondiale del primo dopoguerra costituisce lo sfondo indispensabile per comprendere le vicende di Italia e Germania. Entrambi i paesi uscirono dal conflitto segnati da crisi economiche, tensioni sociali e instabilità politica. In questo contesto maturarono i presupposti che portarono all’affermazione dei regimi fascista e nazista, presentati come risposte radicali a una crisi percepita come totale.</p>
+        <p>Comprendere il dopoguerra a livello mondiale significa, dunque, capire le condizioni che resero possibile l’ascesa dei <span class="note-ref" data-pop="totalitarismi">totalitarismi<span class="badge">6</span></span> in Europa e, in particolare, in Italia e in Germania.</p>
+      </section>
 
-</div>
-</div>
-</div>
+      <div class="hint">
+        <b>Uso:</b> clicca una parola sottolineata → si apre una finestra. Puoi <b>spostarla</b> trascinando la barra in alto, <b>ridimensionarla</b> dalla maniglia in basso a destra e <b>chiuderla</b> con ×.
+      </div>
+    </article>
+  </div>
 
-<!-- TEMPLATES APPROFONDIMENTI -->
-<template id="tpl-impericentrali"><p><b>Imperi centrali</b><br>Con l’espressione Imperi centrali si indicano gli Stati che combatterono contro l’Intesa durante la Prima guerra mondiale. La loro sconfitta portò allo smembramento degli imperi e a un ridisegno instabile dei confini europei.</p></template>
+  <script>
+    // =====================
+    // DATI: approfondimenti (testo ESATTAMENTE come fornito dall’utente)
+    // =====================
+    const NOTES = {
+      rivoluzione: {
+        n: 1,
+        title: 'Rivoluzione bolscevica (1917)',
+        html: `
+          <h3>1. Rivoluzione bolscevica (1917)</h3>
+          <p>La rivoluzione russa non fu solo un evento nazionale, ma un trauma geopolitico per l’intera Europa. Per la prima volta un grande Stato dichiarava apertamente di voler abolire la proprietà privata dei mezzi di produzione e costruire una società senza classi. La nascita dell’Unione Sovietica fece paura alle élite europee e alimentò, nei ceti medi, il timore di un crollo dell’ordine sociale. Questo timore fu uno dei fattori che spinsero molti governi e movimenti politici verso soluzioni autoritarie.</p>
+        `
+      },
+      isolazionismo: {
+        n: 2,
+        title: 'Isolazionismo degli Stati Uniti',
+        html: `
+          <h3>2. Isolazionismo degli Stati Uniti</h3>
+          <p>Dopo la guerra gli Stati Uniti scelsero di non assumere un ruolo stabile nella politica europea. Il rifiuto di entrare nella Società delle Nazioni è il simbolo di questa scelta. L’isolazionismo non significò indifferenza totale, ma una volontà di evitare impegni politici e militari permanenti. Il risultato fu un’Europa lasciata sola a gestire equilibri fragili e conflitti irrisolti.</p>
+        `
+      },
+      crisi1929: {
+        n: 3,
+        title: 'Crisi del 1929',
+        html: `
+          <h3>3. Crisi del 1929</h3>
+          <p>Il crollo di Wall Street non fu un incidente improvviso, ma l’esplosione di squilibri accumulati negli anni precedenti. La crisi colpì duramente la produzione industriale, l’occupazione e i sistemi bancari. In molti paesi la miseria e la disoccupazione delegittimarono le democrazie liberali, considerate incapaci di proteggere i cittadini. Questo clima favorì la diffusione di movimenti radicali e antidemocratici.</p>
+        `
+      },
+      newdeal: {
+        n: 4,
+        title: 'Il New Deal',
+        html: `
+          <h3>4. Il New Deal</h3>
+          <p>Con il New Deal il governo statunitense intervenne direttamente nell’economia per contrastare la crisi. Lo Stato divenne attore centrale: promosse lavori pubblici, sostenne i disoccupati, regolò il sistema finanziario. Questa politica segnò una svolta nel rapporto tra Stato ed economia e mostrò che l’intervento pubblico poteva essere una risposta alla crisi del capitalismo.</p>
+        `
+      },
+      societamassa: {
+        n: 5,
+        title: 'Società di massa e nuove paure',
+        html: `
+          <h3>5. Società di massa e nuove paure</h3>
+          <p>Il primo dopoguerra vide l’affermarsi della società di massa. Con questa espressione si intende una società in cui grandi quantità di individui entrano contemporaneamente nella vita economica, politica e culturale, non più come singoli cittadini isolati ma come masse. Il suffragio più ampio, i partiti di massa, i sindacati, la stampa popolare e i nuovi mezzi di comunicazione resero la politica accessibile a milioni di persone. Questo processo ampliò la democrazia, ma generò anche nuove paure: paura del cambiamento rapido, dell’instabilità e della perdita di status sociale. I regimi autoritari seppero sfruttare le dinamiche della società di massa, parlando alle emozioni collettive e offrendo risposte semplici e rassicuranti a problemi complessi, promettendo ordine e sicurezza.</p>
+        `
+      },
+      totalitarismi: {
+        n: 6,
+        title: 'Verso i totalitarismi',
+        html: `
+          <h3>6. Verso i totalitarismi</h3>
+          <p>Fascismo e nazismo non nacquero dal nulla. Furono il prodotto di un contesto segnato da crisi economiche, instabilità politica e fratture sociali profonde. In questo quadro prese forma il totalitarismo: un sistema politico in cui lo Stato pretende di controllare ogni aspetto della vita individuale e collettiva — politica, economia, cultura, educazione, informazione — eliminando il pluralismo e le libertà democratiche. Il potere si concentra in un partito unico e in un capo carismatico, mentre propaganda, repressione e mobilitazione di massa diventano strumenti permanenti di governo. Comprendere il dopoguerra significa quindi capire perché una parte significativa delle popolazioni europee accettò — o sostenne — la rinuncia alle libertà democratiche in cambio di promesse di stabilità, ordine e grandezza nazionale.</p>
+        `
+      }
+    };
 
-<template id="tpl-rivoluzione"><p><b>Rivoluzione bolscevica</b><br>Processo rivoluzionario che nel 1917 portò i bolscevichi al potere in Russia. Fondato sul partito unico e sulla trasformazione forzata della società, ebbe un enorme impatto internazionale.</p></template>
+    // =====================
+    // Finestre: drag + resize con Pointer Events (mouse + touch)
+    // =====================
+    let topZ = 1200;
 
-<template id="tpl-isolazionismo"><p><b>Isolazionismo</b><br>Scelta degli Stati Uniti di limitare il coinvolgimento politico e militare internazionale dopo la Prima guerra mondiale, indebolendo l’equilibrio europeo.</p></template>
+    function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
 
-<template id="tpl-economiaguerra"><p><b>Economia di guerra</b><br>Sistema economico in cui lo Stato orienta produzione e risorse verso le esigenze belliche. Il ritorno all’economia di pace fu difficile e generò crisi e disoccupazione.</p></template>
+    function bringToFront(win){ win.style.zIndex = String(++topZ); }
 
-<template id="tpl-crisi1929"><p><b>Crisi del 1929</b><br>Il crollo di Wall Street colpì produzione e occupazione a livello globale, delegittimando le democrazie liberali e favorendo movimenti radicali.</p></template>
+    function createWin(noteKey, anchorRect){
+      const note = NOTES[noteKey];
+      if(!note) return;
 
-<template id="tpl-newdeal"><p><b>New Deal</b><br>Politica economica avviata da Roosevelt dal 1933: intervento statale, lavori pubblici, welfare e regolazione finanziaria.</p></template>
+      // se esiste già, portala davanti
+      const existing = document.querySelector(`.win[data-key="${noteKey}"]`);
+      if(existing){ bringToFront(existing); return; }
 
-<template id="tpl-totalitarismi"><p><b>Totalitarismi</b><br>Sistemi politici in cui lo Stato controlla ogni aspetto della vita collettiva attraverso partito unico, propaganda e repressione.</p></template>
+      const win = document.createElement('div');
+      win.className = 'win';
+      win.dataset.key = noteKey;
+      win.style.zIndex = String(++topZ);
 
-<script>
-let z=1000;
-function makeWindow(key,title){
- const tpl=document.getElementById('tpl-'+key);if(!tpl)return;
- const w=document.createElement('div');w.className='win';w.style.zIndex=++z;
- w.innerHTML=`<div class="win-header"><div class="win-title">${title}</div><div class="win-actions"><button data-close>×</button></div></div><div class="win-body"></div><div class="resize"></div>`;
- w.querySelector('.win-body').appendChild(tpl.content.cloneNode(true));
- document.body.appendChild(w);
- const head=w.querySelector('.win-header');let ox,oy,l,t;
- head.onmousedown=e=>{ox=e.clientX;oy=e.clientY;const r=w.getBoundingClientRect();l=r.left;t=r.top;document.onmousemove=ev=>{w.style.left=l+(ev.clientX-ox)+'px';w.style.top=t+(ev.clientY-oy)+'px'};document.onmouseup=()=>document.onmousemove=null}
- w.querySelector('[data-close]').onclick=()=>w.remove();
- const res=w.querySelector('.resize');let ow,oh;
- res.onmousedown=e=>{ox=e.clientX;oy=e.clientY;const r=w.getBoundingClientRect();ow=r.width;oh=r.height;document.onmousemove=ev=>{w.style.width=ow+(ev.clientX-ox)+'px';w.style.height=oh+(ev.clientY-oy)+'px'};document.onmouseup=()=>document.onmousemove=null}
-}
+      // posizione iniziale vicino alla parola cliccata (con fallback)
+      const startLeft = anchorRect ? anchorRect.left + 20 : 90;
+      const startTop  = anchorRect ? anchorRect.top + 30 : 120;
+      win.style.left = clamp(startLeft, 10, window.innerWidth - 300) + 'px';
+      win.style.top  = clamp(startTop,  10, window.innerHeight - 220) + 'px';
 
-document.querySelectorAll('.note-ref').forEach(n=>{
- n.onclick=()=>makeWindow(n.dataset.pop,n.textContent)
-});
-</script>
+      win.innerHTML = `
+        <div class="win-header" data-drag>
+          <div class="win-title">${note.title}</div>
+          <div class="win-actions">
+            <button class="win-btn" data-close aria-label="Chiudi">×</button>
+          </div>
+        </div>
+        <div class="win-body">${note.html}</div>
+        <div class="resize" data-resize title="Ridimensiona"></div>
+      `;
+
+      document.body.appendChild(win);
+
+      // Focus on click
+      win.addEventListener('pointerdown', () => bringToFront(win));
+
+      // Close
+      win.querySelector('[data-close]').addEventListener('click', (e) => {
+        e.stopPropagation();
+        win.remove();
+      });
+
+      // DRAG
+      const dragHandle = win.querySelector('[data-drag]');
+      dragHandle.addEventListener('pointerdown', (e) => {
+        if(e.button !== undefined && e.button !== 0) return; // solo primary
+        e.preventDefault();
+        bringToFront(win);
+
+        const startX = e.clientX;
+        const startY = e.clientY;
+        const rect = win.getBoundingClientRect();
+        const baseL = rect.left;
+        const baseT = rect.top;
+
+        dragHandle.setPointerCapture(e.pointerId);
+
+        function onMove(ev){
+          const dx = ev.clientX - startX;
+          const dy = ev.clientY - startY;
+          const newL = clamp(baseL + dx, 8, window.innerWidth - rect.width - 8);
+          const newT = clamp(baseT + dy, 8, window.innerHeight - rect.height - 8);
+          win.style.left = newL + 'px';
+          win.style.top  = newT + 'px';
+        }
+
+        function onUp(ev){
+          dragHandle.releasePointerCapture(e.pointerId);
+          dragHandle.removeEventListener('pointermove', onMove);
+          dragHandle.removeEventListener('pointerup', onUp);
+          dragHandle.removeEventListener('pointercancel', onUp);
+        }
+
+        dragHandle.addEventListener('pointermove', onMove);
+        dragHandle.addEventListener('pointerup', onUp);
+        dragHandle.addEventListener('pointercancel', onUp);
+      });
+
+      // RESIZE
+      const resizeHandle = win.querySelector('[data-resize]');
+      resizeHandle.addEventListener('pointerdown', (e) => {
+        if(e.button !== undefined && e.button !== 0) return;
+        e.preventDefault();
+        bringToFront(win);
+
+        const startX = e.clientX;
+        const startY = e.clientY;
+        const rect = win.getBoundingClientRect();
+        const baseW = rect.width;
+        const baseH = rect.height;
+
+        resizeHandle.setPointerCapture(e.pointerId);
+
+        function onMove(ev){
+          const dx = ev.clientX - startX;
+          const dy = ev.clientY - startY;
+
+          const maxW = Math.min(window.innerWidth - rect.left - 8, window.innerWidth * 0.92);
+          const maxH = Math.min(window.innerHeight - rect.top - 8, window.innerHeight * 0.80);
+
+          const w = clamp(baseW + dx, 280, Math.max(280, maxW));
+          const h = clamp(baseH + dy, 180, Math.max(180, maxH));
+
+          win.style.width = w + 'px';
+          win.style.height = h + 'px';
+        }
+
+        function onUp(ev){
+          resizeHandle.releasePointerCapture(e.pointerId);
+          resizeHandle.removeEventListener('pointermove', onMove);
+          resizeHandle.removeEventListener('pointerup', onUp);
+          resizeHandle.removeEventListener('pointercancel', onUp);
+        }
+
+        resizeHandle.addEventListener('pointermove', onMove);
+        resizeHandle.addEventListener('pointerup', onUp);
+        resizeHandle.addEventListener('pointercancel', onUp);
+      });
+    }
+
+    // Click sui termini
+    document.querySelectorAll('.note-ref').forEach(el => {
+      el.addEventListener('click', (e) => {
+        const key = el.getAttribute('data-pop');
+        const r = el.getBoundingClientRect();
+        createWin(key, r);
+      });
+    });
+
+    // Se cambia viewport, evita finestre fuori schermo (soft clamp)
+    window.addEventListener('resize', () => {
+      document.querySelectorAll('.win').forEach(w => {
+        const r = w.getBoundingClientRect();
+        const maxL = window.innerWidth - Math.min(r.width, window.innerWidth * 0.92) - 8;
+        const maxT = window.innerHeight - Math.min(r.height, window.innerHeight * 0.80) - 8;
+        w.style.left = clamp(r.left, 8, Math.max(8, maxL)) + 'px';
+        w.style.top  = clamp(r.top,  8, Math.max(8, maxT)) + 'px';
+      });
+    }, {passive:true});
+  </script>
 </body>
 </html>
