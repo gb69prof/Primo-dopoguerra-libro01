@@ -7,86 +7,69 @@
 <style>
 :root{
   --paper:#fbf6ea;--ink:#1f1f1f;--muted:#6a6258;--accent:#7a2e2e;
-  --sideL:rgba(70,90,120,.10);--sideR:rgba(122,46,46,.10);
-  --box:#fffaf0;--radius:16px;--shadow:0 18px 45px rgba(0,0,0,.12);
-  --serif:ui-serif,Palatino,Georgia,serif;--sans:system-ui,Arial,sans-serif;
+  --shadow:0 18px 45px rgba(0,0,0,.18);
+  --radius:16px;--serif:Palatino,Georgia,serif;--sans:system-ui,Arial,sans-serif;
 }
 *{box-sizing:border-box}
 body{margin:0;background:#f1efe8;color:var(--ink);font-family:var(--sans)}
-.wrap{max-width:1200px;margin:24px auto;padding:0 14px}
+.wrap{max-width:900px;margin:28px auto;padding:0 14px}
 .book{background:var(--paper);border:1px solid rgba(140,120,90,.25);border-radius:24px;box-shadow:var(--shadow)}
 .header{padding:22px 26px 12px;border-bottom:1px solid rgba(140,120,90,.22)}
 .title{margin:0;font-family:var(--serif);font-size:28px}
-.grid{display:grid;grid-template-columns:1fr minmax(520px,640px) 1fr;gap:18px;padding:18px}
-.side{border-radius:18px;padding:12px;align-self:start}
-.side.left{background:var(--sideL)}
-.side.right{background:var(--sideR)}
-.side-title{font-size:12px;letter-spacing:.3px;text-transform:uppercase;margin:4px 6px 10px}
-.page{background:rgba(255,255,255,.22);border:1px solid rgba(140,120,90,.22);border-radius:var(--radius);padding:22px 26px}
-.page p{font-family:var(--serif);font-size:17px;line-height:1.72;text-align:justify}
-.note-ref{border-bottom:2px solid rgba(122,46,46,.3);cursor:pointer;text-decoration:none;color:inherit}
+.page{padding:26px}
+.page p{font-family:var(--serif);font-size:17px;line-height:1.72;text-align:justify;margin:0 0 14px}
+.note-ref{border-bottom:2px solid rgba(122,46,46,.35);cursor:pointer}
 .badge{font-size:11px;border:1px solid rgba(122,46,46,.3);border-radius:999px;padding:2px 6px;margin-left:4px}
-.card{display:none;background:var(--box);border:1px solid rgba(140,120,90,.28);border-radius:var(--radius);padding:14px;box-shadow:0 8px 20px rgba(0,0,0,.08)}
-.card[data-open="true"]{display:block}
-.card h3{margin:0 0 6px;font-size:13px;text-transform:uppercase}
-@media(max-width:980px){.grid{grid-template-columns:1fr}.side{order:2}.page{order:1}}
+/* finestre */
+.win{position:fixed;left:80px;top:120px;width:420px;max-width:90vw;height:260px;background:#fffaf0;border:1px solid rgba(140,120,90,.35);border-radius:16px;box-shadow:var(--shadow);z-index:1000;overflow:hidden}
+.win-header{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:rgba(122,46,46,.1);cursor:move}
+.win-title{font-size:13px;text-transform:uppercase}
+.win-actions button{border:1px solid rgba(140,120,90,.35);background:#fff;border-radius:10px;padding:4px 8px;cursor:pointer}
+.win-body{padding:12px 14px;font-family:var(--serif);font-size:14.5px;line-height:1.55;overflow:auto;height:calc(100% - 42px)}
+.resize{position:absolute;right:6px;bottom:6px;width:16px;height:16px;background:rgba(140,120,90,.4);cursor:nwse-resize}
 </style>
 </head>
 <body>
 <div class="wrap">
 <div class="book">
 <div class="header"><h1 class="title">Il mondo dopo la Prima guerra mondiale</h1></div>
-<div class="grid">
+<div class="page">
+<p>La Prima guerra mondiale segnò una frattura profonda nella storia contemporanea. Non si trattò soltanto della fine di un conflitto armato, ma del crollo di un equilibrio politico, economico e sociale che aveva retto l’Europa e gran parte del mondo fino al 1914. Il dopoguerra si aprì come un tempo instabile, attraversato da crisi, speranze e paure, destinato a incidere in modo decisivo sulle vicende dei singoli Stati.</p>
+<p>La fine degli imperi centrali e il ridisegno dei confini non portarono a una pace duratura. Le nuove democrazie nate dopo il conflitto si rivelarono spesso fragili. In Russia, la <span class="note-ref" data-pop="rivoluzione">rivoluzione bolscevica<span class="badge">1</span></span> aprì la strada a un esperimento politico radicale.</p>
+<p>Anche gli Stati Uniti scelsero inizialmente la via dell’<span class="note-ref" data-pop="isolazionismo">isolazionismo<span class="badge">2</span></span>, rinunciando a un ruolo diretto nella politica europea.</p>
+<p>La guerra aveva sconvolto i sistemi produttivi. Gli squilibri esplosero con la <span class="note-ref" data-pop="crisi1929">crisi del 1929<span class="badge">3</span></span>, che mise in discussione il capitalismo liberale.</p>
+<p>Negli Stati Uniti la risposta fu il <span class="note-ref" data-pop="newdeal">New Deal<span class="badge">4</span></span>, una svolta nel rapporto tra Stato ed economia.</p>
+<p>Il primo dopoguerra vide l’affermarsi della <span class="note-ref" data-pop="societamassa">società di massa<span class="badge">5</span></span>, con nuove paure e nuove forme di partecipazione.</p>
+<p>In questo contesto maturarono le condizioni che portarono ai <span class="note-ref" data-pop="totalitarismi">totalitarismi<span class="badge">6</span></span>.</p>
+</div>
+</div>
+</div>
 
-<aside class="side left">
-<div class="side-title">Approfondimenti</div>
-<div class="card" data-note="rivoluzione">
-<h3>Rivoluzione bolscevica (1917)</h3>
-<p>La rivoluzione russa non fu solo un evento nazionale, ma un trauma geopolitico per l’intera Europa. Per la prima volta un grande Stato dichiarava apertamente di voler abolire la proprietà privata dei mezzi di produzione e costruire una società senza classi. La nascita dell’Unione Sovietica fece paura alle élite europee e alimentò, nei ceti medi, il timore di un crollo dell’ordine sociale. Questo timore fu uno dei fattori che spinsero molti governi e movimenti politici verso soluzioni autoritarie.</p>
-</div>
-<div class="card" data-note="isolazionismo">
-<h3>Isolazionismo degli Stati Uniti</h3>
-<p>Dopo la guerra gli Stati Uniti scelsero di non assumere un ruolo stabile nella politica europea. Il rifiuto di entrare nella Società delle Nazioni è il simbolo di questa scelta. L’isolazionismo non significò indifferenza totale, ma una volontà di evitare impegni politici e militari permanenti. Il risultato fu un’Europa lasciata sola a gestire equilibri fragili e conflitti irrisolti.</p>
-</div>
-<div class="card" data-note="societamassa">
-<h3>Società di massa e nuove paure</h3>
-<p>Il primo dopoguerra vide l’affermarsi della società di massa. Con questa espressione si intende una società in cui grandi quantità di individui entrano contemporaneamente nella vita economica, politica e culturale come masse. Questo ampliò la democrazia ma generò nuove paure. I regimi autoritari seppero sfruttare queste dinamiche parlando alle emozioni collettive.</p>
-</div>
-</aside>
+<template id="tpl-rivoluzione"><p><b>Rivoluzione bolscevica (1917)</b><br>La rivoluzione russa non fu solo un evento nazionale, ma un trauma geopolitico per l’Europa. La nascita dell’URSS fece paura alle élite e favorì soluzioni autoritarie.</p></template>
+<template id="tpl-isolazionismo"><p><b>Isolazionismo USA</b><br>Gli Stati Uniti evitarono impegni politici stabili in Europa. L’assenza di un arbitro forte rese il continente più fragile.</p></template>
+<template id="tpl-crisi1929"><p><b>Crisi del 1929</b><br>Il crollo di Wall Street colpì produzione e occupazione, delegittimando le democrazie liberali.</p></template>
+<template id="tpl-newdeal"><p><b>New Deal</b><br>Politica di intervento statale: lavori pubblici, welfare e regolazione finanziaria.</p></template>
+<template id="tpl-societamassa"><p><b>Società di massa</b><br>Ingresso delle masse nella politica e nei media. Più democrazia, ma anche più paura e manipolazione.</p></template>
+<template id="tpl-totalitarismi"><p><b>Totalitarismi</b><br>Sistemi politici che controllano ogni aspetto della vita collettiva tramite partito unico, propaganda e repressione.</p></template>
 
-<main class="page">
-<p>La Prima guerra mondiale segnò una frattura profonda nella storia contemporanea. Non fu solo la fine di un conflitto armato, ma il crollo di un equilibrio politico, economico e sociale. Nel dopoguerra emersero instabilità, crisi e paure.</p>
-<p>In Russia, la <a class="note-ref" data-link="rivoluzione">rivoluzione bolscevica<span class="badge">1</span></a> aprì la strada a un esperimento politico radicale.</p>
-<p>Gli Stati Uniti scelsero la via dell’<a class="note-ref" data-link="isolazionismo">isolazionismo<span class="badge">2</span></a>, rinunciando a un ruolo diretto nella politica europea.</p>
-<p>La partecipazione di massa alla vita politica diede origine alla <a class="note-ref" data-link="societamassa">società di massa<span class="badge">5</span></a>, con nuove speranze ma anche nuove paure.</p>
-<p>Gli squilibri economici esplosero con la crisi del <a class="note-ref" data-link="crisi1929">1929<span class="badge">3</span></a>.</p>
-<p>Negli Stati Uniti la risposta fu il <a class="note-ref" data-link="newdeal">New Deal<span class="badge">4</span></a>.</p>
-<p>In questo contesto maturarono le condizioni che portarono ai <a class="note-ref" data-link="totalitarismi">totalitarismi<span class="badge">6</span></a>.</p>
-</main>
-
-<aside class="side right">
-<div class="side-title">Approfondimenti</div>
-<div class="card" data-note="crisi1929">
-<h3>Crisi del 1929</h3>
-<p>Il crollo di Wall Street non fu improvviso, ma l’esplosione di squilibri accumulati. La crisi colpì duramente produzione e occupazione, delegittimando le democrazie liberali.</p>
-</div>
-<div class="card" data-note="newdeal">
-<h3>Il New Deal</h3>
-<p>Con il New Deal lo Stato intervenne direttamente nell’economia: lavori pubblici, sostegno ai disoccupati, regolazione finanziaria. Fu una svolta storica nel rapporto tra Stato ed economia.</p>
-</div>
-<div class="card" data-note="totalitarismi">
-<h3>Verso i totalitarismi</h3>
-<p>Il totalitarismo è un sistema politico in cui lo Stato controlla ogni aspetto della vita collettiva. Partito unico, capo carismatico, propaganda e repressione diventano strumenti permanenti di governo.</p>
-</div>
-</aside>
-
-</div>
-</div>
-</div>
 <script>
-const links=document.querySelectorAll('.note-ref');
-const cards=document.querySelectorAll('.card');
-links.forEach(l=>{l.addEventListener('click',()=>{const id=l.dataset.link;cards.forEach(c=>c.dataset.open=(c.dataset.note===id));});});
+let z=1000;
+function makeWindow(key,title){
+ const tpl=document.getElementById('tpl-'+key);if(!tpl)return;
+ const w=document.createElement('div');w.className='win';w.style.zIndex=++z;
+ w.innerHTML=`<div class="win-header"><div class="win-title">${title}</div><div class="win-actions"><button data-close>×</button></div></div><div class="win-body"></div><div class="resize"></div>`;
+ w.querySelector('.win-body').appendChild(tpl.content.cloneNode(true));
+ document.body.appendChild(w);
+ const head=w.querySelector('.win-header');let ox,oy,l,t;
+ head.onmousedown=e=>{ox=e.clientX;oy=e.clientY;const r=w.getBoundingClientRect();l=r.left;t=r.top;document.onmousemove=ev=>{w.style.left=l+(ev.clientX-ox)+'px';w.style.top=t+(ev.clientY-oy)+'px'};document.onmouseup=()=>document.onmousemove=null}
+ w.querySelector('[data-close]').onclick=()=>w.remove();
+ const res=w.querySelector('.resize');let ow,oh;
+ res.onmousedown=e=>{ox=e.clientX;oy=e.clientY;const r=w.getBoundingClientRect();ow=r.width;oh=r.height;document.onmousemove=ev=>{w.style.width=ow+(ev.clientX-ox)+'px';w.style.height=oh+(ev.clientY-oy)+'px'};document.onmouseup=()=>document.onmousemove=null}
+}
+
+document.querySelectorAll('.note-ref').forEach(n=>{
+ n.onclick=()=>makeWindow(n.dataset.pop,n.textContent)
+});
 </script>
 </body>
 </html>
