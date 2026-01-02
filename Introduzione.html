@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Il mondo dopo la Prima guerra mondiale — Pagina libro</title>
+  <title>Pagina libro — Approfondimenti a finestre</title>
   <style>
     :root{
       --paper:#fbf6ea;
@@ -11,7 +11,6 @@
       --muted:#6a6258;
       --line:#d7c9ad;
       --accent:#7a2e2e;
-      --box:#fffaf0;
       --shadow: 0 18px 45px rgba(0,0,0,.12);
       --radius: 16px;
       --serif: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
@@ -26,17 +25,12 @@
         #f1efe8;
       color:var(--ink);
       font-family:var(--sans);
+      overflow-x:hidden;
     }
 
-    /* cornice pagina */
-    .wrap{
-      max-width: 1200px;
-      margin: 28px auto;
-      padding: 0 14px 34px;
-    }
+    .wrap{ max-width: 980px; margin: 28px auto; padding: 0 14px 34px; }
 
     .book{
-      position: relative;
       background: linear-gradient(180deg, rgba(255,255,255,.35), transparent 38%), var(--paper);
       border:1px solid rgba(140,120,90,.25);
       border-radius: 24px;
@@ -64,31 +58,15 @@
       font-size: clamp(20px, 2.2vw, 30px);
     }
 
-    .meta{
-      color:var(--muted);
-      font-size: 13px;
-      line-height: 1.35;
-      text-align:right;
-      font-family:var(--sans);
-      max-width: 380px;
-    }
+    .meta{ color:var(--muted); font-size: 13px; line-height: 1.35; max-width: 420px; }
 
-    /* griglia a tre colonne */
-    .grid{
-      position: relative;
-      display:grid;
-      grid-template-columns: 1fr minmax(520px, 640px) 1fr;
-      gap: 22px;
-      padding: 18px 18px 26px;
-    }
-
-    /* colonna testo */
     .page{
       position: relative;
+      margin: 18px;
+      padding: 22px 26px;
       background: rgba(255,255,255,.22);
       border:1px solid rgba(140,120,90,.22);
       border-radius: var(--radius);
-      padding: 22px 26px;
     }
 
     .page:before{
@@ -98,13 +76,6 @@
       border: 1px dashed rgba(140,120,90,.25);
       border-radius: 14px;
       pointer-events:none;
-    }
-
-    .page h2{
-      margin: 0 0 10px;
-      font-family:var(--serif);
-      font-size: 20px;
-      letter-spacing:.2px;
     }
 
     .page p{
@@ -122,8 +93,8 @@
       margin: 12px 0 14px;
     }
 
-    /* note nel testo */
-    .note-ref{
+    /* Termini apri-finestra */
+    .pop-ref{
       display:inline-flex;
       align-items:center;
       gap:6px;
@@ -132,16 +103,10 @@
       cursor:pointer;
       text-decoration:none;
       color: inherit;
-      position:relative;
       border-radius: 6px;
       transition: background .15s ease, border-color .15s ease;
-      scroll-margin-top: 120px;
     }
-
-    .note-ref:hover{
-      background: rgba(122,46,46,.08);
-      border-color: rgba(122,46,46,.42);
-    }
+    .pop-ref:hover{ background: rgba(122,46,46,.08); border-color: rgba(122,46,46,.42); }
 
     .badge{
       font-family:var(--sans);
@@ -153,76 +118,101 @@
       background: rgba(255,255,255,.55);
       color: var(--accent);
       transform: translateY(-1px);
+      user-select:none;
     }
 
-    /* colonne laterali */
-    .side{
-      position: relative;
+    /* =============================
+       FINESTRE: draggable + resizable
+       ============================= */
+    .win{
+      position: fixed;
+      left: 60px;
+      top: 120px;
+      width: min(420px, calc(100vw - 40px));
+      height: 260px;
+      background: rgba(255,250,240,.98);
+      border: 1px solid rgba(140,120,90,.35);
+      border-radius: 16px;
+      box-shadow: 0 18px 45px rgba(0,0,0,.18);
+      overflow: hidden;
+      z-index: 1000;
+      backdrop-filter: blur(2px);
+    }
+
+    .win[data-min="true"]{ height: 46px !important; }
+
+    .win-header{
       display:flex;
-      flex-direction:column;
-      gap: 12px;
-      padding-top: 4px;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding: 10px 10px 8px 12px;
+      background:
+        linear-gradient(90deg, rgba(122,46,46,.10), transparent 55%),
+        rgba(255,255,255,.42);
+      border-bottom: 1px solid rgba(140,120,90,.25);
+      cursor: grab;
+      user-select:none;
+      touch-action:none; /* IMPORTANT: permette drag su touch */
     }
 
-    .side.sticky{
-      position: sticky;
-      top: 14px;
-      align-self:start;
-    }
+    .win-header:active{ cursor: grabbing; }
 
-    .card{
-      background: var(--box);
-      border:1px solid rgba(140,120,90,.28);
-      border-radius: var(--radius);
-      padding: 14px 14px 12px;
-      box-shadow: 0 8px 20px rgba(0,0,0,.08);
-    }
-
-    .card h3{
-      margin:0 0 6px;
+    .win-title{
       font-family:var(--sans);
-      font-size: 14px;
+      font-size: 13px;
       letter-spacing:.3px;
       text-transform: uppercase;
-      color: rgba(31,31,31,.86);
+      color: rgba(31,31,31,.88);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 70%;
     }
 
-    .card p{
-      margin:0;
-      font-family:var(--serif);
-      font-size: 14.5px;
+    .win-actions{ display:flex; gap:6px; align-items:center; }
+
+    .btn{
+      appearance:none;
+      border: 1px solid rgba(140,120,90,.35);
+      background: rgba(255,255,255,.7);
+      border-radius: 10px;
+      padding: 6px 8px;
+      font-family: var(--sans);
+      font-size: 12px;
+      color: rgba(31,31,31,.88);
+      cursor:pointer;
+    }
+
+    .btn:hover{ background: rgba(255,255,255,.95); }
+
+    .win-body{
+      height: calc(100% - 46px);
+      padding: 12px 14px 14px;
+      overflow:auto;
+      font-family: var(--serif);
+      font-size: 14.8px;
       line-height: 1.55;
       color: rgba(31,31,31,.92);
     }
 
-    .card[data-focus="true"]{
-      outline: 2px solid rgba(122,46,46,.28);
-      box-shadow: 0 12px 28px rgba(122,46,46,.12);
-    }
-
-    /* layer linee */
-    .wires{
+    /* Maniglia resize (touch-friendly) */
+    .resize-handle{
       position:absolute;
-      inset:0;
-      pointer-events:none;
-      z-index: 3;
+      right: 8px;
+      bottom: 8px;
+      width: 18px;
+      height: 18px;
+      border-radius: 6px;
+      background:
+        linear-gradient(135deg, rgba(122,46,46,.10), rgba(122,46,46,.0)),
+        rgba(140,120,90,.20);
+      border: 1px solid rgba(140,120,90,.35);
+      cursor: nwse-resize;
+      touch-action:none;
     }
 
-    .wires path{
-      fill:none;
-      stroke: rgba(122,46,46,.35);
-      stroke-width: 2;
-    }
-
-    .wires circle{
-      fill: rgba(122,46,46,.55);
-    }
-
-    /* legenda */
-    .legend{
-      display:flex;
-      gap:10px;
-      align-items:center;
+    .hint{
       padding: 0 26px 18px;
       color: var(--muted);
       font-size: 13px;
@@ -230,296 +220,362 @@
       background: rgba(255,255,255,.14);
     }
 
-    .dot{
-      width:10px; height:10px;
-      border-radius: 999px;
-      background: rgba(122,46,46,.45);
-      border: 1px solid rgba(122,46,46,.35);
-      display:inline-block;
+    /* Preferenze accessibilità: riduci motion */
+    @media (prefers-reduced-motion: reduce){
+      *{ scroll-behavior:auto !important; }
     }
-
-    /* responsive: su schermi piccoli niente linee e sidebars sotto */
-    @media (max-width: 980px){
-      .grid{
-        grid-template-columns: 1fr;
-        padding: 14px 14px 22px;
-      }
-      .side{ order: 2; }
-      .side.sticky{ position: static; }
-      .wires{ display:none; }
-      .page{ order: 1; }
-      .meta{ text-align:left; }
-      .header{ align-items:flex-start; flex-direction:column; }
-    }
-
-    /* piccola animazione di focus */
-    @keyframes pulse{ 0%{transform:scale(1)} 50%{transform:scale(1.06)} 100%{transform:scale(1)} }
-    .note-ref[data-hot="true"] .badge{ animation: pulse .35s ease; }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <div class="book" id="book">
+    <div class="book">
       <div class="header">
         <h1 class="title">Il mondo dopo la Prima guerra mondiale</h1>
         <div class="meta">
-          Pagina digitale “in stile libro”: testo centrale + approfondimenti laterali collegati.
-          <br />
-          (Clicca i termini numerati nel testo.)
+          Esempio concreto con approfondimenti come <b>finestre mobili</b>: trascina, ridimensiona, minimizza, chiudi.
+          <br/>Clicca i termini numerati nel testo.
         </div>
       </div>
 
-      <div class="grid" id="grid">
-        <!-- linee (solo desktop) -->
-        <svg class="wires" id="wires" aria-hidden="true">
-          <defs>
-            <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
-              <path d="M0,0 L10,5 L0,10 z" fill="rgba(122,46,46,.45)"></path>
-            </marker>
-          </defs>
-        </svg>
+      <main class="page" id="page">
+        <div class="divider"></div>
 
-        <!-- SINISTRA: box -->
-        <aside class="side sticky" id="leftSide">
-          <div class="card" id="card-rivoluzione" data-note="rivoluzione">
-            <h3>Approfondimento 2 — Rivoluzione bolscevica</h3>
-            <p>
-              Nel 1917 i bolscevichi guidati da Lenin prendono il potere in Russia. Nasce uno Stato a partito unico,
-              che punta a trasformare economia e società in modo forzato. In Europa, la paura di un “contagio rivoluzionario”
-              diventa un fattore politico enorme.
-            </p>
-          </div>
+        <p>
+          La Prima guerra mondiale segnò una frattura profonda nella storia contemporanea. Non si trattò soltanto
+          della fine di un conflitto armato, ma del crollo di un equilibrio politico, economico e sociale che aveva retto
+          l’Europa e gran parte del mondo fino al 1914. Il dopoguerra si aprì come un tempo instabile, attraversato da crisi,
+          speranze e paure, destinato a incidere in modo decisivo sulle vicende dei singoli Stati.
+        </p>
 
-          <div class="card" id="card-isolazionismo" data-note="isolazionismo">
-            <h3>Approfondimento 4 — Isolazionismo USA</h3>
-            <p>
-              Dopo la guerra gli Stati Uniti scelgono spesso di non impegnarsi stabilmente negli equilibri europei.
-              L’idea è: meno alleanze, meno interventi. Effetto collaterale: l’Europa resta più esposta a crisi e tensioni
-              senza un arbitro forte.
-            </p>
-          </div>
-        </aside>
+        <p>
+          La fine degli imperi centrali (impero tedesco e impero austro-ungarico) e il ridisegno dei confini non portarono
+          a una pace duratura. Le nuove democrazie nate dopo il conflitto si rivelarono spesso fragili, incapaci di rispondere
+          alle aspettative di popolazioni provate dalla guerra. In Russia, la
+          <a class="pop-ref" href="#" data-pop="rivoluzione" title="Apri finestra approfondimento">
+            rivoluzione bolscevica <span class="badge">2</span>
+          </a>
+          aveva aperto la strada a un esperimento politico radicale, fondato sulla dittatura del partito unico e sulla
+          trasformazione forzata della società.
+        </p>
 
-        <!-- CENTRO: testo -->
-        <main class="page" id="page">
-          <h2>Testo</h2>
-          <div class="divider"></div>
+        <p>
+          Anche gli Stati Uniti, pur usciti rafforzati dalla guerra, scelsero inizialmente la via dell’
+          <a class="pop-ref" href="#" data-pop="isolazionismo" title="Apri finestra approfondimento">
+            isolazionismo <span class="badge">4</span>
+          </a>
+          , rinunciando a un ruolo diretto nella costruzione di un nuovo ordine internazionale.
+        </p>
 
-          <p>
-            La Prima guerra mondiale segnò una frattura profonda nella storia contemporanea. Non si trattò soltanto
-            della fine di un conflitto armato, ma del crollo di un equilibrio politico, economico e sociale che aveva retto
-            l’Europa e gran parte del mondo fino al 1914. Il dopoguerra si aprì come un tempo instabile, attraversato da crisi,
-            speranze e paure, destinato a incidere in modo decisivo sulle vicende dei singoli Stati.
-          </p>
+        <p>
+          Gli squilibri accumulati esplosero con la
+          <a class="pop-ref" href="#" data-pop="crisi1929" title="Apri finestra approfondimento">
+            crisi del 1929 <span class="badge">3</span>
+          </a>
+          , che mostrò i limiti del capitalismo liberale.
+        </p>
 
-          <p>
-            La fine degli imperi centrali (impero tedesco e impero austro-ungarico) e il ridisegno dei confini non portarono
-            a una pace duratura. Le nuove democrazie nate dopo il conflitto si rivelarono spesso fragili, incapaci di rispondere
-            alle aspettative di popolazioni provate dalla guerra. In Russia,
-            la
-            <a class="note-ref" href="#card-rivoluzione" data-note-id="rivoluzione" title="Vai all'approfondimento">
-              rivoluzione bolscevica <span class="badge">2</span>
-            </a>
-            aveva aperto la strada a un esperimento politico radicale, fondato sulla dittatura del partito unico e sulla
-            trasformazione forzata della società. Negli altri paesi europei, il timore che la rivoluzione potesse estendersi
-            alimentò una diffusa instabilità politica e il ricorso a soluzioni autoritarie.
-          </p>
+        <p>
+          Negli Stati Uniti la risposta fu il
+          <a class="pop-ref" href="#" data-pop="newdeal" title="Apri finestra approfondimento">
+            New Deal <span class="badge">1</span>
+          </a>
+          , una politica di intervento statale nell’economia che segnò una svolta storica.
+        </p>
 
-          <p>
-            Anche gli Stati Uniti, pur usciti rafforzati dalla guerra, scelsero inizialmente la via
-            dell’
-            <a class="note-ref" href="#card-isolazionismo" data-note-id="isolazionismo" title="Vai all'approfondimento">
-              isolazionismo <span class="badge">4</span>
-            </a>
-            , rinunciando a un ruolo diretto nella costruzione di un nuovo ordine internazionale.
-            Questo lasciò l’Europa priva di un reale equilibrio politico e diplomatico.
-          </p>
+        <div class="divider"></div>
+        <p style="margin:0; color:var(--muted); font-family:var(--sans); font-size:13px;">
+          Nota: questa demo è pensata per funzionare anche su iPad (touch drag + resize).
+        </p>
+      </main>
 
-          <p>
-            La guerra aveva sconvolto i sistemi produttivi. La riconversione dall’economia di guerra a quella di pace risultò
-            problematica: la disoccupazione aumentò, i debiti pubblici pesarono sulle finanze statali e la dipendenza economica
-            europea dagli Stati Uniti si fece sempre più evidente. Gli squilibri accumulati esplosero con la
-            <a class="note-ref" href="#card-1929" data-note-id="crisi1929" title="Vai all'approfondimento">
-              crisi del 1929 <span class="badge">3</span>
-            </a>
-            , che mostrò i limiti del capitalismo liberale e mise in discussione l’idea che il mercato fosse in grado di
-            autoregolarsi.
-          </p>
-
-          <p>
-            Negli Stati Uniti la risposta fu il
-            <a class="note-ref" href="#card-newdeal" data-note-id="newdeal" title="Vai all'approfondimento">
-              New Deal <span class="badge">1</span>
-            </a>
-            , una politica di intervento statale nell’economia che segnò una svolta storica.
-            In Europa, invece, la crisi colpì duramente soprattutto i paesi già più fragili, alimentando tensioni sociali
-            e radicalizzazioni politiche.
-          </p>
-
-          <p>
-            Il dopoguerra fu anche un periodo di profondi mutamenti sociali. La partecipazione di massa alla guerra aveva
-            accresciuto la coscienza politica delle popolazioni. Operai, contadini, reduci e donne rivendicarono nuovi diritti
-            e un maggiore riconoscimento sociale. Allo stesso tempo, il trauma del conflitto, la disoccupazione e la paura del
-            futuro generarono insicurezza e sfiducia nelle istituzioni democratiche.
-          </p>
-
-          <p>
-            In questo clima, molti individui cercarono risposte semplici a problemi complessi, aprendo la strada a ideologie
-            che promettevano ordine, stabilità e riscatto nazionale.
-          </p>
-
-          <p>
-            Il quadro mondiale del primo dopoguerra costituisce lo sfondo indispensabile per comprendere le vicende di Italia
-            e Germania. Entrambi i paesi uscirono dal conflitto segnati da crisi economiche, tensioni sociali e instabilità
-            politica. In questo contesto maturarono i presupposti che portarono all’affermazione dei regimi fascista e nazista,
-            presentati come risposte radicali a una crisi percepita come totale.
-          </p>
-
-          <div class="divider"></div>
-          <p style="margin:0; color:var(--muted); font-family:var(--sans); font-size:13px;">
-            Nota tecnica: le frecce sono disegnate con SVG e si aggiornano automaticamente su scroll/resize.
-          </p>
-        </main>
-
-        <!-- DESTRA: box -->
-        <aside class="side sticky" id="rightSide">
-          <div class="card" id="card-newdeal" data-note="newdeal">
-            <h3>Approfondimento 1 — New Deal</h3>
-            <p>
-              Programma di riforme economiche e sociali avviato negli Stati Uniti (anni ’30) per rispondere alla crisi.
-              Lo Stato interviene direttamente: lavori pubblici, sostegno all’occupazione, regole per finanza e banche,
-              protezioni sociali. È una svolta: il mercato non basta, serve anche un “timone” pubblico.
-            </p>
-          </div>
-
-          <div class="card" id="card-1929" data-note="crisi1929">
-            <h3>Approfondimento 3 — Crisi del 1929</h3>
-            <p>
-              Il crollo di Wall Street (1929) innesca una crisi globale: fallimenti bancari, disoccupazione, crollo della
-              domanda. Mostra la fragilità del capitalismo senza regole e accelera la radicalizzazione politica in vari paesi.
-            </p>
-          </div>
-        </aside>
-      </div>
-
-      <div class="legend">
-        <span class="dot"></span>
-        <span>
-          I numeri nel testo rimandano ai riquadri. Su schermi piccoli, i riquadri vanno sotto e le frecce spariscono.
-        </span>
+      <div class="hint">
+        <b>Come usarle:</b> trascina la barra in alto; ridimensiona dalla maniglia in basso a destra; “–” minimizza; “×” chiude.
       </div>
     </div>
   </div>
 
+  <!-- TEMPLATES (contenuti approfondimenti) -->
+  <template id="tpl-newdeal">
+    <div>
+      <p>
+        <b>New Deal</b>: programma di riforme economiche e sociali avviato negli Stati Uniti negli anni ’30 per rispondere
+        alla crisi. Lo Stato interviene direttamente con lavori pubblici, sostegno all’occupazione, regole per finanza e banche,
+        e misure di protezione sociale.
+      </p>
+      <p>
+        È una svolta: non basta “lasciare fare” al mercato. Serve un timone pubblico, almeno nei momenti di tempesta.
+      </p>
+    </div>
+  </template>
+
+  <template id="tpl-crisi1929">
+    <div>
+      <p>
+        <b>Crisi del 1929</b>: il crollo di Wall Street innesca una crisi globale. Fallimenti bancari, disoccupazione,
+        crollo della domanda e instabilità politica.
+      </p>
+      <p>
+        In molti paesi la crisi alimenta l’idea che “serva un uomo forte” e accelera le radicalizzazioni.
+      </p>
+    </div>
+  </template>
+
+  <template id="tpl-rivoluzione">
+    <div>
+      <p>
+        <b>Rivoluzione bolscevica (1917)</b>: i bolscevichi guidati da Lenin prendono il potere in Russia.
+        Nasce uno Stato a partito unico che mira a trasformare economia e società in modo forzato.
+      </p>
+      <p>
+        In Europa la paura di un “contagio rivoluzionario” diventa un fattore politico enorme.
+      </p>
+    </div>
+  </template>
+
+  <template id="tpl-isolazionismo">
+    <div>
+      <p>
+        <b>Isolazionismo USA</b>: dopo la guerra, gli Stati Uniti scelgono spesso di ridurre gli impegni stabili
+        negli equilibri europei (meno alleanze, meno interventi).
+      </p>
+      <p>
+        Effetto collaterale: l’Europa resta più esposta a crisi e tensioni senza un arbitro forte.
+      </p>
+    </div>
+  </template>
+
   <script>
     (function(){
-      const grid = document.getElementById('grid');
-      const wires = document.getElementById('wires');
-      const refs  = Array.from(document.querySelectorAll('.note-ref'));
+      const openers = Array.from(document.querySelectorAll('.pop-ref'));
+      const activeWindows = new Map(); // key -> element
+      let topZ = 1000;
 
-      let raf = null;
+      function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
 
-      function rect(el){
-        return el.getBoundingClientRect();
+      function bringToFront(win){
+        topZ += 1;
+        win.style.zIndex = String(topZ);
       }
 
-      function clearWires(){
-        // lascia defs/marker
-        Array.from(wires.querySelectorAll('path, circle')).forEach(n => n.remove());
+      function createWindow(key){
+        const id = 'tpl-' + key;
+        const tpl = document.getElementById(id);
+        if(!tpl){
+          console.warn('Template non trovato:', id);
+          return null;
+        }
+
+        const win = document.createElement('section');
+        win.className = 'win';
+        win.setAttribute('role', 'dialog');
+        win.setAttribute('aria-label', 'Approfondimento ' + key);
+        win.dataset.key = key;
+
+        // posizione iniziale a cascata
+        const offset = activeWindows.size * 22;
+        win.style.left = (60 + offset) + 'px';
+        win.style.top  = (120 + offset) + 'px';
+
+        const header = document.createElement('div');
+        header.className = 'win-header';
+
+        const title = document.createElement('div');
+        title.className = 'win-title';
+        // titoli carini
+        const titles = {
+          newdeal: 'Approfondimento 1 — New Deal',
+          crisi1929: 'Approfondimento 3 — Crisi del 1929',
+          rivoluzione: 'Approfondimento 2 — Rivoluzione bolscevica',
+          isolazionismo: 'Approfondimento 4 — Isolazionismo USA'
+        };
+        title.textContent = titles[key] || ('Approfondimento — ' + key);
+
+        const actions = document.createElement('div');
+        actions.className = 'win-actions';
+
+        const btnMin = document.createElement('button');
+        btnMin.className = 'btn';
+        btnMin.type = 'button';
+        btnMin.textContent = '–';
+        btnMin.title = 'Minimizza';
+
+        const btnClose = document.createElement('button');
+        btnClose.className = 'btn';
+        btnClose.type = 'button';
+        btnClose.textContent = '×';
+        btnClose.title = 'Chiudi';
+
+        actions.appendChild(btnMin);
+        actions.appendChild(btnClose);
+
+        header.appendChild(title);
+        header.appendChild(actions);
+
+        const body = document.createElement('div');
+        body.className = 'win-body';
+        body.appendChild(tpl.content.cloneNode(true));
+
+        const handle = document.createElement('div');
+        handle.className = 'resize-handle';
+        handle.title = 'Ridimensiona';
+
+        win.appendChild(header);
+        win.appendChild(body);
+        win.appendChild(handle);
+
+        // Eventi
+        win.addEventListener('pointerdown', () => bringToFront(win));
+
+        btnClose.addEventListener('click', (e) => {
+          e.stopPropagation();
+          activeWindows.delete(key);
+          win.remove();
+        });
+
+        btnMin.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const isMin = win.dataset.min === 'true';
+          win.dataset.min = isMin ? 'false' : 'true';
+        });
+
+        makeDraggable(win, header);
+        makeResizable(win, handle);
+
+        document.body.appendChild(win);
+        bringToFront(win);
+
+        return win;
       }
 
-      function draw(){
-        if (window.matchMedia('(max-width: 980px)').matches) return;
+      function makeDraggable(win, header){
+        let startX=0, startY=0, startLeft=0, startTop=0;
+        let dragging = false;
 
-        clearWires();
+        header.addEventListener('pointerdown', (e) => {
+          // evita drag se clicchi sui bottoni
+          if(e.target.closest('button')) return;
 
-        const g = rect(grid);
-        // dimensiona svg
-        wires.setAttribute('width', g.width);
-        wires.setAttribute('height', g.height);
+          dragging = true;
+          bringToFront(win);
 
-        refs.forEach(refEl => {
-          const id = refEl.getAttribute('data-note-id');
-          const cardEl = document.querySelector('.card[data-note="'+id+'"]') || document.getElementById('card-'+id);
-          if(!cardEl) return;
+          const r = win.getBoundingClientRect();
+          startX = e.clientX;
+          startY = e.clientY;
+          startLeft = r.left;
+          startTop  = r.top;
 
-          const r1 = rect(refEl);
-          const r2 = rect(cardEl);
+          header.setPointerCapture(e.pointerId);
+        });
 
-          // punto di partenza: lato sinistro o destro del termine, a seconda di dove sta il box
-          const refCenterY = (r1.top + r1.bottom)/2 - g.top;
-          const cardCenterY = (r2.top + r2.bottom)/2 - g.top;
+        header.addEventListener('pointermove', (e) => {
+          if(!dragging) return;
+          const dx = e.clientX - startX;
+          const dy = e.clientY - startY;
 
-          const refX = (r2.left > r1.left) ? (r1.right - g.left) : (r1.left - g.left);
-          const cardX = (r2.left > r1.left) ? (r2.left - g.left) : (r2.right - g.left);
+          const newLeft = startLeft + dx;
+          const newTop  = startTop  + dy;
 
-          const x1 = Math.max(0, Math.min(g.width, refX));
-          const y1 = Math.max(0, Math.min(g.height, refCenterY));
-          const x2 = Math.max(0, Math.min(g.width, cardX));
-          const y2 = Math.max(0, Math.min(g.height, cardCenterY));
+          // clamp dentro viewport con un minimo di margine
+          const vw = window.innerWidth;
+          const vh = window.innerHeight;
+          const r = win.getBoundingClientRect();
+          const w = r.width;
+          const h = r.height;
 
-          // curva morbida
-          const dx = Math.abs(x2 - x1);
-          const bend = Math.max(70, Math.min(160, dx * 0.35));
-          const c1x = (x1 < x2) ? x1 + bend : x1 - bend;
-          const c2x = (x1 < x2) ? x2 - bend : x2 + bend;
+          win.style.left = clamp(newLeft, 10 - (w-60), vw - 60) + 'px';
+          win.style.top  = clamp(newTop,  10, vh - 60) + 'px';
+        });
 
-          const path = document.createElementNS('http://www.w3.org/2000/svg','path');
-          path.setAttribute('d', `M ${x1} ${y1} C ${c1x} ${y1}, ${c2x} ${y2}, ${x2} ${y2}`);
-          path.setAttribute('marker-end', 'url(#arrow)');
-          wires.appendChild(path);
+        header.addEventListener('pointerup', (e) => {
+          dragging = false;
+          try{ header.releasePointerCapture(e.pointerId); }catch(_){ }
+        });
 
-          const dot = document.createElementNS('http://www.w3.org/2000/svg','circle');
-          dot.setAttribute('cx', x1);
-          dot.setAttribute('cy', y1);
-          dot.setAttribute('r', 3.2);
-          wires.appendChild(dot);
+        header.addEventListener('pointercancel', (e) => {
+          dragging = false;
+          try{ header.releasePointerCapture(e.pointerId); }catch(_){ }
         });
       }
 
-      function schedule(){
-        if (raf) cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(draw);
+      function makeResizable(win, handle){
+        let startX=0, startY=0, startW=0, startH=0;
+        let resizing = false;
+
+        handle.addEventListener('pointerdown', (e) => {
+          resizing = true;
+          bringToFront(win);
+
+          const r = win.getBoundingClientRect();
+          startX = e.clientX;
+          startY = e.clientY;
+          startW = r.width;
+          startH = r.height;
+
+          handle.setPointerCapture(e.pointerId);
+        });
+
+        handle.addEventListener('pointermove', (e) => {
+          if(!resizing) return;
+          const dx = e.clientX - startX;
+          const dy = e.clientY - startY;
+
+          const minW = 260;
+          const minH = 180;
+          const maxW = Math.min(window.innerWidth - 20, 720);
+          const maxH = Math.min(window.innerHeight - 20, 620);
+
+          const newW = clamp(startW + dx, minW, maxW);
+          const newH = clamp(startH + dy, minH, maxH);
+
+          win.style.width = newW + 'px';
+          if(win.dataset.min !== 'true') win.style.height = newH + 'px';
+        });
+
+        handle.addEventListener('pointerup', (e) => {
+          resizing = false;
+          try{ handle.releasePointerCapture(e.pointerId); }catch(_){ }
+        });
+
+        handle.addEventListener('pointercancel', (e) => {
+          resizing = false;
+          try{ handle.releasePointerCapture(e.pointerId); }catch(_){ }
+        });
       }
 
-      function clearFocus(){
-        document.querySelectorAll('.card').forEach(c => c.dataset.focus = "false");
-        document.querySelectorAll('.note-ref').forEach(r => r.dataset.hot = "false");
-      }
+      // Apri finestra al click sul termine
+      openers.forEach(a => {
+        a.addEventListener('click', (e) => {
+          e.preventDefault();
+          const key = a.getAttribute('data-pop');
+          if(!key) return;
 
-      refs.forEach(refEl => {
-        refEl.addEventListener('click', (e) => {
-          const id = refEl.getAttribute('data-note-id');
-          const cardEl = document.querySelector('.card[data-note="'+id+'"]') || document.getElementById('card-'+id);
-          if(!cardEl) return;
-
-          // focus visivo
-          clearFocus();
-          refEl.dataset.hot = "true";
-          cardEl.dataset.focus = "true";
-
-          // per desktop scroll leggero verso la card (se serve)
-          // (su mobile il link normale porta comunque alla card)
-          if (!window.matchMedia('(max-width: 980px)').matches){
-            const r = cardEl.getBoundingClientRect();
-            if (r.top < 0 || r.bottom > window.innerHeight){
-              cardEl.scrollIntoView({behavior:'smooth', block:'center'});
-            }
+          // se già aperta, porta davanti
+          if(activeWindows.has(key)){
+            const win = activeWindows.get(key);
+            if(win){ bringToFront(win); }
+            return;
           }
 
-          // aggiorna linee dopo eventuale scroll
-          setTimeout(schedule, 260);
+          const win = createWindow(key);
+          if(win) activeWindows.set(key, win);
         });
       });
 
-      window.addEventListener('resize', schedule, {passive:true});
-      window.addEventListener('scroll', schedule, {passive:true});
+      // scorciatoia: ESC chiude la finestra top
+      document.addEventListener('keydown', (e) => {
+        if(e.key !== 'Escape') return;
+        // trova il win con z-index più alto
+        const wins = Array.from(document.querySelectorAll('.win'));
+        if(!wins.length) return;
+        let top = wins[0];
+        for(const w of wins){
+          if(parseInt(w.style.zIndex||'0',10) > parseInt(top.style.zIndex||'0',10)) top = w;
+        }
+        const k = top.dataset.key;
+        activeWindows.delete(k);
+        top.remove();
+      });
 
-      // prima render
-      schedule();
-
-      // aggiornamento extra dopo i font
-      window.addEventListener('load', () => setTimeout(schedule, 60));
     })();
   </script>
 </body>
